@@ -1,14 +1,24 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
+import TodoItem from './TodoItem';
 
-const TodoList = () => {
+const TodoList = ({ todos, toggleTodo }) => {
   return (
-    <View testID="todo-list">
-      <Text />
-    </View>
+    <FlatList
+      testID="todo-list"
+      style={styles.list}
+      data={todos}
+      renderItem={({ item }) => {
+        return <TodoItem todo={item} toggleTodo={toggleTodo} />;
+      }}
+    />
   );
 };
 
-export default TodoList;
+const styles = StyleSheet.create({
+  list: {
+    flex: 1,
+  },
+});
 
-const styles = StyleSheet.create({});
+export default TodoList;

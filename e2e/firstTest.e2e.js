@@ -1,4 +1,4 @@
-describe('Example', () => {
+describe('TodoList', () => {
   beforeAll(async () => {
     await device.launchApp();
   });
@@ -11,17 +11,22 @@ describe('Example', () => {
     await expect(element(by.id('todo-list'))).toBeVisible();
   });
 
-  // it('should have welcome screen', async () => {
-  //   await expect(element(by.id('welcome'))).toBeVisible();
-  // });
+  it('should be able to add new todos and clears the text input', async () => {
+    await element(by.id('todo-input')).typeText('new todo');
+    await element(by.text('submit')).tap();
+    await expect(element(by.id('todo-input'))).toHaveValue('');
+    await expect(element(by.text('new todo'))).toBeVisible();
+  });
 
-  // it('should show hello screen after tap', async () => {
-  //   await element(by.id('hello_button')).tap();
-  //   await expect(element(by.text('Hello!!!'))).toBeVisible();
-  // });
+  it('can toggle a todo between completed and not pending status', async () => {
+    await element(by.id('todo-input')).typeText('new todo');
+    await element(by.text('submit')).tap();
+    await expect(element(by.text('new todo'))).toBeVisible();
 
-  // it('should show world screen after tap', async () => {
-  //   await element(by.id('world_button')).tap();
-  //   await expect(element(by.text('World!!!'))).toBeVisible();
-  // });
+    await element(by.text('new todo')).tap();
+    await expect(element(by.text('new todo (DONE)'))).toBeVisible();
+
+    await element(by.text('new todo (DONE)')).tap();
+    await expect(element(by.text('new todo'))).toBeVisible();
+  });
 });
